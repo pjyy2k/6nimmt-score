@@ -20,9 +20,47 @@ This is a scorekeeping companion; it does not manage cards or enforce card-play 
 
 ## Languages
 
-English, Korean, Japanese, Simplified Chinese, German, French, Spanish, and Portuguese.
+**30 languages**, listed in descending order of estimated total speakers (first- plus second-language speakers):
 
-The initial interface language follows supported browser language preferences, with English as the fallback. Select another language using the selector at the top; the choice is remembered in that browser.
+| Order | Language | Code |
+| --- | --- | --- |
+| 1 | English | `en` |
+| 2 | Mandarin Chinese | `zh` |
+| 3 | Hindi | `hi` |
+| 4 | Spanish | `es` |
+| 5 | Modern Standard Arabic | `ar` |
+| 6 | French | `fr` |
+| 7 | Bengali | `bn` |
+| 8 | Portuguese | `pt` |
+| 9 | Indonesian | `id` |
+| 10 | Urdu | `ur` |
+| 11 | Russian | `ru` |
+| 12 | German | `de` |
+| 13 | Japanese | `ja` |
+| 14 | Nigerian Pidgin | `pcm` |
+| 15 | Egyptian Arabic | `arz` |
+| 16 | Marathi | `mr` |
+| 17 | Vietnamese | `vi` |
+| 18 | Telugu | `te` |
+| 19 | Swahili | `sw` |
+| 20 | Hausa | `ha` |
+| 21 | Turkish | `tr` |
+| 22 | Western Punjabi | `pnb` |
+| 23 | Tagalog | `tl` |
+| 24 | Tamil | `ta` |
+| 25 | Yue Chinese (Cantonese) | `yue` |
+| 26 | Wu Chinese | `wuu` |
+| 27 | Iranian Persian | `fa` |
+| 28 | Korean | `ko` |
+| 29 | Amharic | `am` |
+| 30 | Thai | `th` |
+
+Selection and menu order use a fixed snapshot of the [Ethnologue 2026 ranking as summarized on Wikipedia](https://en.wikipedia.org/w/index.php?title=List_of_languages_by_total_number_of_speakers&oldid=1380301586), consulted on 2026-10-19. This ranks **speakers**, not website traffic. Dialects and varieties follow that source's categories; Mandarin uses Simplified Chinese, Cantonese uses Traditional Chinese, and Western Punjabi uses Shahmukhi. Rounded population ties retain source order. Estimates and classifications may change; the menu is not updated automatically.
+
+All 30 locales have a complete set of 60 interface messages, including validation messages and confirmation dialogs. Arabic, Egyptian Arabic, Urdu, Western Punjabi, and Persian use a right-to-left interface. Translation completeness and behavior are checked programmatically; translations have not undergone professional native-speaker review.
+
+
+The initial interface language follows supported browser language preferences (including `fil` → Tagalog, `ar-EG` → Egyptian Arabic, and `pa-Arab` → Western Punjabi), with English as the fallback. Select another language using the selector at the top; the choice is remembered in that browser.
 
 Default participant names are always **Player 1**, **Player 2**, and so on. Custom names and recorded scores remain unchanged when switching languages.
 
