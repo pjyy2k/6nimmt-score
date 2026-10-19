@@ -10,7 +10,10 @@ A lightweight, multilingual scorekeeper for **2–10 players**. Enter penalty po
 - Choose 2–10 players and edit their names.
 - Record, edit, and delete round scores.
 - Calculate cumulative totals and rankings automatically; tied scores share a rank.
-- Set the end score (default: **66**). When anyone reaches it, the lowest total is shown as the winner.
+- Set the end score (default: **66**). At **66 or more** (inclusive), the lowest total is shown as the winner.
+- Identify the highest total as last place, or joint last when multiple players share that highest total. Before the end score is reached, this is labeled as the current last place.
+- Highlight **every** player at or above the end score and list their totals, highest first. Reaching the end score does not automatically mean last place: only the highest total is last.
+- Recalculate these indicators after edits, deletions, backup restores, player changes, and changes to the end score.
 - Automatically save names, scores, and the current entry in the same browser.
 - Export/import JSON backups and export scores as UTF-8 CSV.
 - Use the responsive interface on phones, tablets, and desktops.
@@ -57,7 +60,7 @@ This is a scorekeeping companion; it does not manage cards or enforce card-play 
 
 Selection and menu order use a fixed snapshot of the [Ethnologue 2026 ranking as summarized on Wikipedia](https://en.wikipedia.org/w/index.php?title=List_of_languages_by_total_number_of_speakers&oldid=1380301586), consulted on 2026-10-19. This ranks **speakers**, not website traffic. Dialects and varieties follow that source's categories; Mandarin uses Simplified Chinese, Cantonese uses Traditional Chinese, and Western Punjabi uses Shahmukhi. Rounded population ties retain source order. Estimates and classifications may change; the menu is not updated automatically.
 
-All 30 locales have a complete set of 60 interface messages, including validation messages and confirmation dialogs. Arabic, Egyptian Arabic, Urdu, Western Punjabi, and Persian use a right-to-left interface. Translation completeness and behavior are checked programmatically; translations have not undergone professional native-speaker review.
+All 30 locales have a complete set of 66 interface messages, including validation messages and confirmation dialogs. Arabic, Egyptian Arabic, Urdu, Western Punjabi, and Persian use a right-to-left interface. Translation completeness and behavior are checked programmatically; translations have not undergone professional native-speaker review.
 
 
 The initial interface language follows supported browser language preferences (including `fil` → Tagalog, `ar-EG` → Egyptian Arabic, and `pa-Arab` → Western Punjabi), with English as the fallback. Select another language using the selector at the top; the choice is remembered in that browser.
@@ -92,6 +95,19 @@ Publish the repository root as the site's public directory:
 - Backend: none
 
 For a static host such as Coolify, GitHub Pages, or a conventional web server, serve **both files together** and preserve their relative paths. Uploading only `index.html` is insufficient.
+
+## End score and last place
+
+The threshold comparison is **greater than or equal to** the configured end score. With an end score of 66:
+
+| Totals | Players at/above the threshold | Last place |
+| --- | --- | --- |
+| 65, 20, 10 | None | 65 (current last) |
+| 66, 20, 10 | 66 | 66 |
+| 80, 70, 20 | 80 and 70 | 80 |
+| 70, 70, 20 | Both players with 70 | Both players with 70 (joint last) |
+
+The threshold list and last-place labels are separate from the normal ranking. When all totals tie, all players share last place as well as the same rank. No last-place label is shown before any round is saved.
 
 ## Player changes
 
