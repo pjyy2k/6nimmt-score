@@ -86,3 +86,9 @@ $('cancelNames').onclick=()=>$('namesDialog').close();
 $('namesForm').addEventListener('submit',e=>{e.preventDefault();const count=Number($('playerCount').value);if(!Number.isInteger(count)||count<2||count>10)return;const oldCount=state.names.length,names=Array.from({length:count},(_,i)=>$('playerName'+i).value.trim().slice(0,24)||defaultName(i));if(count<oldCount&&!confirm(t('removeConfirm',{names:list(state.names.slice(count))})))return;const values=rawScores();state.names=names;state.rounds=state.rounds.map(r=>Array.from({length:count},(_,i)=>r[i]??0));state.draft=Array.from({length:count},(_,i)=>state.draft[i]??0);if(editing===null)state.draft=Array.from({length:count},(_,i)=>values[i]??0);persist();render();values.slice(0,count).forEach((v,i)=>{$('score'+i).value=v;});$('namesDialog').close();message('settingsSaved',{n:count});});
 $('language').addEventListener('change',e=>{lang=supported(e.target.value)||'en';try{localStorage.setItem(LANG_KEY,lang);}catch(err){}applyLanguage();renderWithScores();});
 applyLanguage();render();persist();
+function playEntrance(){
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  document.body.classList.add('entering');
+  setTimeout(()=>document.body.classList.remove('entering'),1100);
+}
+playEntrance();
