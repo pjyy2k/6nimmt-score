@@ -60,7 +60,7 @@ This is a scorekeeping companion; it does not manage cards or enforce card-play 
 
 Selection and menu order use a fixed snapshot of the [Ethnologue 2026 ranking as summarized on Wikipedia](https://en.wikipedia.org/w/index.php?title=List_of_languages_by_total_number_of_speakers&oldid=1380301586), consulted on 2026-10-19. This ranks **speakers**, not website traffic. Dialects and varieties follow that source's categories; Mandarin uses Simplified Chinese, Cantonese uses Traditional Chinese, and Western Punjabi uses Shahmukhi. Rounded population ties retain source order. Estimates and classifications may change; the menu is not updated automatically.
 
-All 30 locales have a complete set of 66 interface messages, including validation messages and confirmation dialogs. Arabic, Egyptian Arabic, Urdu, Western Punjabi, and Persian use a right-to-left interface. Translation completeness and behavior are checked programmatically; translations have not undergone professional native-speaker review.
+All 30 locales have a complete set of 70 interface messages, including validation messages and confirmation dialogs. Arabic, Egyptian Arabic, Urdu, Western Punjabi, and Persian use a right-to-left interface. Translation completeness and behavior are checked programmatically; translations have not undergone professional native-speaker review.
 
 
 The initial interface language follows supported browser language preferences (including `fil` → Tagalog, `ar-EG` → Egyptian Arabic, and `pa-Arab` → Western Punjabi), with English as the fallback. Select another language using the selector at the top; the choice is remembered in that browser.
@@ -95,6 +95,16 @@ Publish the repository root as the site's public directory:
 - Backend: none
 
 For a static host such as Coolify, GitHub Pages, or a conventional web server, serve **both files together** and preserve their relative paths. Uploading only `index.html` is insufficient.
+
+## Final scoreboard and undo
+
+As soon as a saved total reaches or exceeds the configured end score, the input controls are disabled and the playing area is hidden. A short animation reveals a final scoreboard sorted by total points, lowest first. First place, last place (including ties), and every player at or above the end score are labeled. Equal scores share their rank; tied rows keep the original participant order.
+
+Only the final results and **Undo** / **Reset** controls are shown in the game area. The language selector and operator links remain available. Animation respects the browser's reduced-motion preference.
+
+- **Undo** restores the state immediately before the action that ended the game, including a final round entry, round edit, end-score change, or backup import. The checkpoint is saved locally, so it also works after reloading. When there is no checkpoint (for example an older finished backup), Undo removes the last recorded round; repeat if earlier totals still reach the threshold. Undone round values are put back into the entry fields for correction.
+- **Reset** clears all round scores after confirmation and keeps participant names, player count, and the configured end score.
+- Final ranking is display-only: scores cannot be added while the game is finished. Use Undo to correct an entry.
 
 ## End score and last place
 
