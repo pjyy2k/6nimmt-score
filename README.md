@@ -18,6 +18,7 @@ A lightweight, multilingual scorekeeper for **2–10 players**. Enter penalty po
 - Export/import JSON backups and export scores as UTF-8 CSV.
 - Use the responsive interface on phones, tablets, and desktops.
 - Run without a backend, build step, package installation, or third-party libraries.
+- Enjoy a subtle fade/slide entrance and staggered player cards on initial load. The effect completes in about one second, never blocks input, and is skipped when reduced motion is enabled.
 
 This is a scorekeeping companion; it does not manage cards or enforce card-play rules.
 
