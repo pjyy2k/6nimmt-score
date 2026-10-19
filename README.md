@@ -23,7 +23,7 @@ This is a scorekeeping companion; it does not manage cards or enforce card-play 
 
 ## Languages
 
-**30 languages**, listed in descending order of estimated total speakers (first- plus second-language speakers):
+**30 languages**. The language menu pins **Korean at the top**; the remaining languages follow descending estimated total speakers (first- plus second-language speakers). The population ranking used for selection is listed below:
 
 | Order | Language | Code |
 | --- | --- | --- |
@@ -58,7 +58,7 @@ This is a scorekeeping companion; it does not manage cards or enforce card-play 
 | 29 | Amharic | `am` |
 | 30 | Thai | `th` |
 
-Selection and menu order use a fixed snapshot of the [Ethnologue 2026 ranking as summarized on Wikipedia](https://en.wikipedia.org/w/index.php?title=List_of_languages_by_total_number_of_speakers&oldid=1380301586), consulted on 2026-10-19. This ranks **speakers**, not website traffic. Dialects and varieties follow that source's categories; Mandarin uses Simplified Chinese, Cantonese uses Traditional Chinese, and Western Punjabi uses Shahmukhi. Rounded population ties retain source order. Estimates and classifications may change; the menu is not updated automatically.
+Selection and the population-based part of the menu order use a fixed snapshot of the [Ethnologue 2026 ranking as summarized on Wikipedia](https://en.wikipedia.org/w/index.php?title=List_of_languages_by_total_number_of_speakers&oldid=1380301586), consulted on 2026-10-19. This ranks **speakers**, not website traffic. Dialects and varieties follow that source's categories; Mandarin uses Simplified Chinese, Cantonese uses Traditional Chinese, and Western Punjabi uses Shahmukhi. Rounded population ties retain source order. Estimates and classifications may change; the menu is not updated automatically.
 
 All 30 locales have a complete set of 70 interface messages, including validation messages and confirmation dialogs. Arabic, Egyptian Arabic, Urdu, Western Punjabi, and Persian use a right-to-left interface. Translation completeness and behavior are checked programmatically; translations have not undergone professional native-speaker review.
 
