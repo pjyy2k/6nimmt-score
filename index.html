@@ -43,6 +43,7 @@
   body.entering #standings>.person:nth-child(10){--entrance-index:9}
 }
 @media print{.language-bar,.top,.logo,#liveGame>.summary,#liveGame>.section-title,#liveGame>.entry,.credits,body.entering #standings>.person{animation:none!important}}
+.credits [data-visitor-counter]{margin-inline-start:8px;font-size:11px;font-weight:400;color:var(--muted);font-variant-numeric:tabular-nums}
 </style>
 </head>
 <body><main>
@@ -58,6 +59,7 @@
 <footer class="footer"><div class="tools"><button id="backup" data-i18n="backup"></button><button id="restore" data-i18n="restore"></button><button id="csv" data-i18n="csv"></button><button id="reset" class="danger" data-i18n="reset"></button></div><span id="status" role="status" aria-live="polite"></span></footer><input type="file" id="fileInput" accept="application/json,.json" hidden><p class="note" data-i18n="note"></p>
 </div>
 <section id="finalScoreboard" class="final-scoreboard" hidden aria-labelledby="finalTitle"><div class="final-heading"><div class="finish-icon" aria-hidden="true">★</div><h2 id="finalTitle" tabindex="-1"></h2><p id="finalWinner"></p><p id="finalMeta" class="final-meta"></p></div><ol id="finalRows" class="final-rows"></ol><div class="final-actions"><button id="undoEnd" type="button"></button><button id="resetFinal" class="primary" type="button"></button></div></section>
-<div class="credits" dir="ltr"><span>Operator: <strong>JinYoungPark</strong></span><a href="https://github.com/pjyy2k/6nimmt-score" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div>
+<div class="credits" dir="ltr"><span>Operator: <strong>JinYoungPark</strong> <small data-visitor-counter aria-live="polite">—</small></span><a href="https://github.com/pjyy2k/6nimmt-score" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div>
 </main><dialog id="namesDialog" class="names-dialog" aria-labelledby="namesTitle"><form id="namesForm"><h2 id="namesTitle" data-i18n="settingsTitle"></h2><p data-i18n="settingsHelp"></p><label class="count-label" for="playerCount"><span data-i18n="playerCount"></span><select id="playerCount"><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option></select></label><p class="resize-note" data-i18n="resizeNote"></p><div id="nameFields" class="name-fields"></div><div class="dialog-actions"><button type="button" id="cancelNames" data-i18n="cancel"></button><button class="primary" type="submit" data-i18n="saveSettings"></button></div></form></dialog>
-<script src="./app.js?v=c074b014bc9c" defer></script></body></html>
+<script src="./app.js?v=c074b014bc9c" defer></script><script defer src="https://vc.hellojyp.com/counter.js" data-site="site-b94256ba-e815-465c-b348-261dbedeb90a"></script>
+</body></html>
