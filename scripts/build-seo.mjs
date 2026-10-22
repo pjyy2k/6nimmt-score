@@ -1,0 +1,33 @@
+import fs from 'node:fs';
+import vm from 'node:vm';
+import { fileURLToPath } from 'node:url';
+import path from 'node:path';
+const root = fileURLToPath(new URL('../', import.meta.url));
+const source = fs.readFileSync(path.join(root, 'app.js'), 'utf8');
+const { I18N, LANGUAGES } = vm.runInNewContext(source.slice(0, source.indexOf("const KEY=")) + ';({I18N,LANGUAGES})');
+const template = fs.readFileSync(path.join(root, 'templates/index.html'), 'utf8');
+const origin = 'https://6nimmt.hellojyp.com';
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const url = code => `${origin}/${code}/`;
+const alternates = LANGUAGES.map(l => `<link rel="alternate" hreflang="${l.code}" href="${url(l.code)}">`).join('\n') + `\n<link rel="alternate" hreflang="x-default" href="${origin}/">`;
+for (const code of [null, ...LANGUAGES.map(l => l.code)]) {
+  const language = LANGUAGES.find(l => l.code === (code || 'en'));
+  const dict = I18N[language.code];
+  const canonical = code ? url(code) : `${origin}/`;
+  const title = language.code === 'ko' ? '젝스님트 점수 계산기 | 2~10인 무료 점수판 – 6 nimmt!' : `${dict.title} | 2–10 · 66`;
+  const description = language.code === 'ko' ? '2~10명이 사용하는 무료 젝스님트 점수 기록기. 참가자 이름 수정, 라운드별 벌점과 순위 계산, 기본 66점 종료, 공동 순위, JSON 백업과 CSV 내보내기 및 30개 언어를 지원합니다.' : language.code === 'en' ? 'Free 6 nimmt! scorekeeper for 2–10 players. Track round penalties, totals, tied ranks and the default 66-point end score. Editable names, JSON backups, CSV export and 30 languages.' : `${dict.subtitle} ${dict.lower}. ${dict.settingsHelp} ${dict.entryHelp}`;
+  const schema = {'@context':'https://schema.org','@type':'WebApplication',name:dict.title,url:canonical,description,inLanguage:language.code,applicationCategory:'GameApplication',operatingSystem:'Any',isAccessibleForFree:true,author:{'@type':'Person',name:'JinYoungPark',url:'https://github.com/pjyy2k'},offers:{'@type':'Offer',price:'0',priceCurrency:'USD'}};
+  const head = `<title>${esc(title)}</title>\n<meta name="description" content="${esc(description)}">\n<meta name="robots" content="index,follow,max-image-preview:large">\n<meta name="author" content="JinYoungPark">\n<link rel="canonical" href="${canonical}">\n${alternates}\n<meta property="og:type" content="website">\n<meta property="og:site_name" content="6 nimmt! Scorekeeper">\n<meta property="og:title" content="${esc(title)}">\n<meta property="og:description" content="${esc(description)}">\n<meta property="og:url" content="${canonical}">\n<meta name="twitter:card" content="summary">\n<script type="application/ld+json">${JSON.stringify(schema).replace(/</g,'\\u003c')}</script>`;
+  const guide = `<section class="search-guide" aria-labelledby="guideTitle">\n<h2 id="guideTitle" data-i18n="title">${esc(dict.title)}</h2>\n<p data-i18n="subtitle">${esc(dict.subtitle)}</p>\n<ol><li data-i18n="settingsHelp">${esc(dict.settingsHelp)}</li><li data-i18n="entryHelp">${esc(dict.entryHelp)}</li><li data-i18n="hint">${esc(dict.hint)}</li></ol>\n<h3 data-i18n="standings">${esc(dict.standings)}</h3>\n<p><strong data-i18n="lower">${esc(dict.lower)}</strong> · <span data-i18n="limit">${esc(dict.limit)}</span>: 66</p>\n<p data-i18n="note">${esc(dict.note)}</p>\n<h3 data-i18n="backup">${esc(dict.backup)}</h3><p><span data-i18n="backup">${esc(dict.backup)}</span> · JSON · <span data-i18n="restore">${esc(dict.restore)}</span> · <span data-i18n="csv">${esc(dict.csv)}</span></p>\n<nav class="language-links" aria-label="Languages">${LANGUAGES.map(l=>`<a href="/${l.code}/" hreflang="${l.code}" lang="${l.code}" dir="${l.dir}"${l.code===language.code?' aria-current="page"':''}>${esc(l.name)}</a>`).join(' ')}</nav>\n</section>`;
+  let html = template.replace('<html lang="en">', `<html lang="${language.code}" dir="${language.dir}"${code?` data-page-language="${code}"`:''}>`).replace(/<title>.*?<\/title>/,head);
+  html = html.replace(/(<([\w-]+)\b[^>]*\bdata-i18n="([^"]+)"[^>]*>)[^<]*(<\/\2>)/g,(all,open,tag,key,close)=>`${open}${esc(dict[key] || I18N.en[key] || key)}${close}`);
+  html = html.replace('<div class="credits"', `${guide}\n<div class="credits"`);
+  html = html.replace('src="./app.js?v=c074b014bc9c"', `src="${code ? '../' : './'}app.js?v=seo-20261022"`);
+  html = html.replace('</style>', 'body:has(#finalScoreboard:not([hidden])) .search-guide{display:none}.search-guide{margin-top:32px;padding:22px;border:1px solid var(--line);border-radius:18px;font-size:14px;line-height:1.7}.search-guide h3{font-size:15px;margin:18px 0 6px}.search-guide li{margin:7px 0}.language-links{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:20px}.language-links a{color:var(--green);padding:4px}.language-links a[aria-current]{font-weight:750}@media print{.search-guide{display:none}}\n</style>');
+  const output = path.join(root, code ? `${code}/index.html` : 'index.html');
+  fs.mkdirSync(path.dirname(output), {recursive:true});fs.writeFileSync(output, html);
+}
+const pages = [`${origin}/`, ...LANGUAGES.map(l=>url(l.code))];
+fs.writeFileSync(path.join(root,'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${pages.map(loc=>`  <url><loc>${loc}</loc></url>`).join('\n')}\n</urlset>\n`);
+fs.writeFileSync(path.join(root,'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${origin}/sitemap.xml\n`);
+console.log(`Generated ${pages.length} static pages, sitemap.xml and robots.txt`);

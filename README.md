@@ -155,4 +155,36 @@ The page loads `app.js` with `defer`. Keeping JavaScript separate makes maintena
 
 참가자 설정에서 2~10명과 이름을 지정한 후, 라운드별 벌점을 입력하고 저장하세요. 누적 점수가 낮은 사람이 높은 순위입니다. 이름과 점수는 현재 브라우저에 저장되므로 중요한 기록은 JSON으로 백업하세요.
 
-정적 배포 시 `index.html`과 `app.js`를 같은 폴더에 함께 배포해야 합니다. 별도의 빌드나 서버 프로그램은 필요하지 않습니다.
+정적 배포 시 저장소 전체를 배포하여 언어별 폴더, `robots.txt`, `sitemap.xml`도 함께 제공해야 합니다. 별도의 빌드나 서버 프로그램은 필요하지 않습니다.
+
+
+## Search visibility and localized pages
+
+- The root page and 30 language directories contain readable HTML before JavaScript runs. Each includes translated usage instructions, scoring guidance and links to every language.
+- `/ko/`, `/en/`, and the other language directories have their own canonical URLs, reciprocal `hreflang` links, descriptions, social sharing metadata and WebApplication JSON-LD. The root is the `x-default` entry.
+- Explicit language URLs take precedence over a saved language preference. The existing dropdown still changes the interface without reloading, preserving unsaved edits; the language links open the corresponding permanent URL.
+- All pages share game storage on the same origin. Do not change the domain or storage keys to migrate between languages.
+- The ending screen continues to show the final scoreboard and hides the usage guide.
+- `robots.txt` allows crawlers, including Googlebot, Bingbot and OAI-SearchBot, and points to `sitemap.xml`. Hosting/firewall rules must also permit access. This file does not opt out of model-training crawlers; control those separately if desired.
+- Structured data describes the free scorekeeper, without invented reviews or ratings. It does not guarantee indexing, ranking or AI citations.
+
+### Maintaining static pages
+
+Edit `templates/index.html` for layout/styles, and `app.js` for translations and behavior. Then regenerate the committed HTML files:
+
+```sh
+node scripts/build-seo.mjs
+node --check app.js
+```
+
+Node.js is only needed when maintaining the project; the deployed site remains static and requires no build server or additional external API. Deploy the root files **and all 30 language directories**. Directory URLs such as `/ko/` must serve their own `index.html`, rather than always falling back to the root document. If the host requires a publish directory, use the repository root. The canonical production origin is configured in `scripts/build-seo.mjs`; update it before moving domains.
+
+### Owner setup after deployment
+
+1. Verify the domain in Google Search Console and Bing Webmaster Tools with their provided DNS TXT records.
+2. Submit `https://6nimmt.hellojyp.com/sitemap.xml` to both services.
+3. Inspect the root and language URLs for indexing eligibility. Confirm the deployed `/robots.txt`, `/sitemap.xml`, `/ko/` and `/en/` return their intended contents.
+4. Check Cloudflare bot/firewall events for blocked search crawlers and adjust only the relevant rules.
+5. Monitor indexing and search traffic. New pages can take time to be discovered; inclusion and AI citations are not guaranteed.
+
+The visitor counter is independent of indexing and does not submit pages to search engines.
