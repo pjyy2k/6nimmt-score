@@ -24,7 +24,7 @@ This is a scorekeeping companion; it does not manage cards or enforce card-play 
 
 ## Languages
 
-**30 languages**. The language menu pins **Korean at the top**; the remaining languages follow descending estimated total speakers (first- plus second-language speakers). The population ranking used for selection is listed below:
+**30 languages**.
 
 | Order | Language | Code |
 | --- | --- | --- |
